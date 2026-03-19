@@ -399,9 +399,8 @@ export function GameTable() {
       {(() => {
         const displayBalance = state.phase === "betting" ? state.balance - pendingBet : state.balance;
         return (
-          <div className="flex items-center justify-center gap-3 px-4 py-2">
-            <ChipStacks amount={displayBalance} size="sm" maxPerStack={8} />
-            <span className="text-yellow-400 text-xs font-bold">${displayBalance}</span>
+          <div className="flex items-center justify-center px-4 py-2">
+            <ChipStacks amount={displayBalance} size="sm" maxPerStack={8} bankLayout />
           </div>
         );
       })()}

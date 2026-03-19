@@ -22,6 +22,31 @@ export function decomposeIntoChips(amount: number): Map<number, number> {
   return groups;
 }
 
+/** Bank-style racks: keep up to 2 of each denomination when possible, then greedy remainder. */
+export function decomposeIntoChipsForBank(amount: number): Map<number, number> {
+  const groups = new Map<number, number>();
+  let remaining = Math.max(0, amount);
+
+  for (const val of DENOMS) {
+    const canTake = Math.floor(remaining / val);
+    const take = Math.min(2, canTake);
+    if (take > 0) {
+      groups.set(val, take);
+      remaining -= take * val;
+    }
+  }
+
+  for (const val of DENOMS) {
+    const add = Math.floor(remaining / val);
+    if (add > 0) {
+      groups.set(val, (groups.get(val) ?? 0) + add);
+      remaining -= add * val;
+    }
+  }
+
+  return groups;
+}
+
 function decomposeToFlatList(amount: number): number[] {
   const chips: number[] = [];
   let remaining = amount;
@@ -195,11 +220,14 @@ export function ChipStacks({
   size = "md",
   maxPerStack = 6,
   mixed = false,
+  bankLayout = false,
 }: {
   amount: number;
   size?: "xs" | "sm" | "md";
   maxPerStack?: number;
   mixed?: boolean;
+  /** When true (grouped layout only), prefer at least 2 of each denom in rack when balance allows. */
+  bankLayout?: boolean;
 }) {
   const s = SIZES[size];
 
@@ -219,7 +247,7 @@ export function ChipStacks({
     return <MixedPile chips={chips} size={size} maxPerStack={maxPerStack} />;
   }
 
-  const groups = decomposeIntoChips(amount);
+  const groups = bankLayout ? decomposeIntoChipsForBank(amount) : decomposeIntoChips(amount);
 
   return (
     <div className="flex items-end" style={{ gap: s.gap }}>
