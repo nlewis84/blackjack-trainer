@@ -1,13 +1,12 @@
-import type { Route } from "./+types/home";
-import { Welcome } from "../welcome/welcome";
+import { GameTable } from "~/components/game-table";
 
-export function meta({}: Route.MetaArgs) {
+export function meta() {
   return [
-    { title: "New React Router App" },
-    { name: "description", content: "Welcome to React Router!" },
+    { title: "Blackjack Trainer" },
+    { name: "description", content: "Practice blackjack basic strategy" },
   ];
 }
 
 export default function Home() {
-  return <Welcome />;
+  return <GameTable />;
 }

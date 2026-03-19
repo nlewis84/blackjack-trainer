@@ -10,15 +10,6 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-html,
-body {
-  @apply bg-white dark:bg-gray-950;
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
-}
-
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -140,4 +131,79 @@ body {
   html {
     @apply font-sans;
   }
+}
+
+/* ── Green felt table ─────────────────────────────────────── */
+.table-felt {
+  background:
+    radial-gradient(ellipse at 50% 40%, #1a6b3c 0%, #145a30 40%, #0d4423 70%, #0a3319 100%);
+  position: relative;
+}
+
+.table-felt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+.table-felt > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Card deal animation ──────────────────────────────────── */
+@keyframes deal-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-deal-in {
+  animation: deal-in 0.35s ease-out both;
+}
+
+/* ── Selected element pulse glow ─────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 4px 1px rgba(255, 255, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 12px 3px rgba(255, 255, 255, 0.5);
+  }
+}
+
+.selected-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* ── Premium CTA button hover ────────────────────────────── */
+@keyframes shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+.btn-premium {
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-premium:hover:not(:disabled) {
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3), 0 0 15px rgba(52, 211, 153, 0.25);
+}
+
+.btn-premium:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
 }
