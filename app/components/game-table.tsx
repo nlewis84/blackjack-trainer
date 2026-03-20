@@ -153,6 +153,11 @@ export function GameTable() {
           e.preventDefault();
           handleNewHand();
         }
+      } else if (state.phase === "betting" && state.balance <= 0) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          game.reset();
+        }
       }
     }
     window.addEventListener("keydown", onKeyDown, true);
