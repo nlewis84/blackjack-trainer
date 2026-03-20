@@ -437,7 +437,7 @@ export function GameTable() {
         sessionTotal={state.sessionStats.totalDecisions}
       />
 
-      {showFeedback && state.decisions.length > 0 && (
+      {showFeedback && (
         <StrategyAutoOpen onOpen={() => setFeedbackOpen(true)} />
       )}
     </div>
